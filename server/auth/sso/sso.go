@@ -7,6 +7,7 @@ import (
 	"crypto/rsa"
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"regexp"
@@ -369,6 +370,8 @@ func (s *sso) Authorize(authorization string) (*types.Claims, error) {
 		return nil, fmt.Errorf("failed to validate claims: %v", err)
 	}
 
+	claims, _ := json.Marshal(c)
+	log.Debugf("parsed claims: %s", string(claims))
 	return c, nil
 }
 
